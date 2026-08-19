@@ -18,7 +18,10 @@ jobs:
             with:
                 ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           - name: Install missing build tools
-            run: apt-get update && apt-get install -y automake autoconf libtool
+            run: |
+              apt-get update && apt-get install -y automake autoconf libtool
+              ln -sf /usr/bin/automake /usr/bin/automake-1.15
+              ln -sf /usr/bin/aclocal /usr/bin/aclocal-1.15
           - name: Run full test
             env:
               GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
